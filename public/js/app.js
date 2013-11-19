@@ -60,11 +60,8 @@ app.controller('ChartCtrl', function ($scope, $http, ChartExampleData) {
     data: ChartExampleData.data,
     options: ChartExampleData.options
   };
-
-  $scope.exportChart = function() {
-    console.log($scope.chart);
-  }
 });
 
 app.controller('ChartExportCtrl', function ($scope) {
+  $scope.chart = chart;
 });

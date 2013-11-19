@@ -1,46 +1,44 @@
-// var child_process, createScreenshot, phantom, url;
+var path = require('path');
 
-// phantom = require('phantom');
+var phantom = require('node-phantom');
 
-// child_process = require('child_process');
+var chartData = {};
 
-// url = process.argv[2];
-// url = "http://localhost:3000/"
-
-// createScreenshot = function(page, filename) {
-//   return page.render(filename, function() {
-//     child_process.exec("open " + filename);
-//     return process.exit();
-//   });
-// };
-
-// phantom.create(function(ph) {
-//   return ph.createPage(function(page) {
-//     page.set('viewportSize', {
-//       width: 1000,
-//       height: 1000
-//     });
-//     page.set('clipRect', {
-//       top: 0,
-//       left: 0,
-//       width: 1000,
-//       height: 1000
-//     });
-//     console.log("Opening " + url + " ...");
-//     return page.open(url, function(status) {
-//       console.log("Rendering screenshot ...");
-//       return setTimeout((function() {
-//         return createScreenshot(page, 'output.png');
-//       }), 1000);
-//     });
-//   });
-// });
-
-
-exports.renderPdf = function(req, res){
-  res.render('export', { title: 'PDF' });
+exports.renderPdf = function(req, res) {
+  // console.log(req.body);
+  // chartData = req.body.chart;
+  res.render('export', {
+    title: 'PDF',
+    chart: chartData
+  });
 };
 
-exports.exportPdf = function(req, res){
-  res.redirect('/exports/test.txt');
+exports.exportPdf = function(req, res) {
+  console.log(req.body);
+  chartData = req.body.chart;
+
+  phantom.create(function (error, ph) {
+    ph.createPage(function (error, page) {
+      var data = "pass=my_pass";
+      page.post("http://localhost:3000/render/pdf", data, function(err, status) {
+      // page.open("http://localhost:3000/", function(status) {
+        console.log("opened page? ", status);
+          page.render('page.pdf', function (error) {
+            if (error) {
+              console.log('Error rendering PDF: %s', error);
+            } else {
+              res.download('page.pdf');
+            }
+          });
+
+        ph.exit();
+      });
+
+      // page.set('content', html, function (error) {
+      //   ph.exit();
+      // });
+    });
+  });
+
 };
+
