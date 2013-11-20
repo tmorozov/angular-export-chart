@@ -2,11 +2,8 @@ var path = require('path');
 
 var phantom = require('node-phantom');
 
-var chartData = {};
-
 exports.renderPdf = function(req, res) {
-  // console.log(req.body);
-  // chartData = req.body.chart;
+  chartData = JSON.parse(req.body.chart);
   res.render('export', {
     title: 'PDF',
     chart: chartData
@@ -14,8 +11,9 @@ exports.renderPdf = function(req, res) {
 };
 
 exports.exportPdf = function(req, res) {
-  console.log(req.body);
-  chartData = req.body.chart;
+  var data = "chart="+JSON.stringify(req.body.chart);
+  var host = req.protocol + '://' + req.get('Host');
+  var url = host+"/render/pdf";
 
   phantom.create(function (error, ph) {
     if(!ph) {
@@ -25,36 +23,25 @@ exports.exportPdf = function(req, res) {
     }
 
     ph.createPage(function (error, page) {
-      var data = "pass=my_pass";
-      // var port = req.app.settings.port || cfg.port;
-      // var host = req.protocol + '://' + req.host  + ( port == 80 || port == 443 ? '' : ':'+port );
 
-      // no port for heroku deployment
-      var host = req.protocol + '://' + req.get('Host');
-      var url = host+"/render/pdf";
+      page.post(url, data, function(err, status) {
+        console.log("opened page? ", status, err, url);
 
-      page.set('viewportSize', {width:800, height:600}, function(err) {
+        page.setViewport({width: 640, height: 480}, function(err) {
 
-        page.post(url, data, function(err, status) {
-        // page.open("http://localhost:3000/", function(status) {
-          console.log("opened page? ", status, err, url);
-            page.render('page.pdf', function (error) {
-              if (error) {
-                console.log('Error rendering PDF: %s', error);
-              } else {
-                res.download('page.pdf');
-              }
-            });
+          page.render('page.pdf', function (error) {
+            if (error) {
+              console.log('Error rendering PDF: %s', error);
+            } else {
+              res.download('page.pdf');
+            }
+          });
 
           ph.exit();
         });
 
       });
 
-
-      // page.set('content', html, function (error) {
-      //   ph.exit();
-      // });
     });
   });
 

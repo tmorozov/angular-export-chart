@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  p Welcome to #{title}
   div(ng-controller="ChartExportCtrl")
     div(style="height: 300px; width: 400px;")
       linechart(data="chart.data", options="chart.options")
