@@ -7,4 +7,7 @@ block content
       linechart(data="chart.data", options="chart.options")
     form(action="/export/pdf", method="POST")
       input(type="hidden", name="chart", value="{{chart}}")
-      button(type="submit") Export
+      button(type="submit") Export PDF
+    form(action="/export/png", method="POST")
+      input(type="hidden", name="chart", value="{{chart}}")
+      button(type="submit") Export PNG

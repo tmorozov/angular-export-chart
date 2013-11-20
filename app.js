@@ -33,6 +33,9 @@ app.get('/', routes.index);
 app.post('/render/pdf', exporting.renderPdf);
 app.post('/export/pdf', exporting.exportPdf);
 
+app.post('/render/png', exporting.renderPng);
+app.post('/export/png', exporting.exportPng);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
