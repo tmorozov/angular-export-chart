@@ -1,6 +1,6 @@
 var path = require('path');
-
 var phantom = require('node-phantom');
+var fs = require('fs');
 
 exports.renderPng = function(req, res) {
   chartData = JSON.parse(req.body.chart);
@@ -90,5 +90,51 @@ exports.exportPdf = function(req, res) {
     });
   });
 
+};
+
+
+function convert2Str(data, separator) {
+  var res = "";
+  if(data.length) {
+
+    var keys = Object.keys(data[0]);
+    res += keys.join(separator)+"\n";
+
+    data.forEach(function(item) {
+      var values = keys.map(function(key){
+        return item[key];
+      });
+      res += values.join(separator)+"\n";
+    });
+
+  }
+
+  return res;
+}
+
+exports.exportXls = function(req, res) {
+  var chart = JSON.parse(req.body.chart);
+  var fileName = 'page.xls';
+
+  fs.writeFile(fileName, convert2Str(chart.data, "\t"), function(err) {
+    if(err) {
+      console.log(err);
+    } else {
+      res.download(fileName);
+    }
+  });
+};
+
+exports.exportCsv = function(req, res) {
+  var chart = JSON.parse(req.body.chart);
+  var fileName = 'page.csv';
+
+  fs.writeFile(fileName, convert2Str(chart.data, ","), function(err) {
+    if(err) {
+      console.log(err);
+    } else {
+      res.download(fileName);
+    }
+  });
 };
 

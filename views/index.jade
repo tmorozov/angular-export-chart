@@ -11,3 +11,9 @@ block content
     form(action="/export/png", method="POST")
       input(type="hidden", name="chart", value="{{chart}}")
       button(type="submit") Export PNG
+    form(action="/export/xls", method="POST")
+      input(type="hidden", name="chart", value="{{chart}}")
+      button(type="submit") Export XLS
+    form(action="/export/csv", method="POST")
+      input(type="hidden", name="chart", value="{{chart}}")
+      button(type="submit") Export CSV
