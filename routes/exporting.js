@@ -18,6 +18,12 @@ exports.exportPdf = function(req, res) {
   chartData = req.body.chart;
 
   phantom.create(function (error, ph) {
+    if(!ph) {
+      res.status(500);
+      console.log('no PhantomJS');
+      return;
+    }
+
     ph.createPage(function (error, page) {
       var data = "pass=my_pass";
       var port = req.app.settings.port || cfg.port;
