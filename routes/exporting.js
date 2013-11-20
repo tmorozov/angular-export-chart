@@ -33,21 +33,24 @@ exports.exportPdf = function(req, res) {
       var host = req.protocol + '://' + req.get('Host');
       var url = host+"/render/pdf";
 
-      page.set('viewportSize', {width:800,height:600});
+      page.set('viewportSize', {width:800, height:600}, function(err) {
 
-      page.post(url, data, function(err, status) {
-      // page.open("http://localhost:3000/", function(status) {
-        console.log("opened page? ", status, err, url);
-          page.render('page.pdf', function (error) {
-            if (error) {
-              console.log('Error rendering PDF: %s', error);
-            } else {
-              res.download('page.pdf');
-            }
-          });
+        page.post(url, data, function(err, status) {
+        // page.open("http://localhost:3000/", function(status) {
+          console.log("opened page? ", status, err, url);
+            page.render('page.pdf', function (error) {
+              if (error) {
+                console.log('Error rendering PDF: %s', error);
+              } else {
+                res.download('page.pdf');
+              }
+            });
 
-        ph.exit();
+          ph.exit();
+        });
+
       });
+
 
       // page.set('content', html, function (error) {
       //   ph.exit();
