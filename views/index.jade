@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  p Welcome to #{title}
+  div(ng-controller="ChartCtrl")
+    div(style="height: 300px; width: 400px;")
+      linechart(data="chart.data", options="chart.options")
+    form(action="/export/pdf", method="POST")
+      input(type="hidden", name="chart", value="{{chart}}")
+      button(type="submit") Export

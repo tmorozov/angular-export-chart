@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  p Welcome to #{title}
+  div(ng-controller="ChartExportCtrl")
+    linechart(data="chart.data", options="chart.options")
