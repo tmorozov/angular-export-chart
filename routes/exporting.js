@@ -33,6 +33,8 @@ exports.exportPdf = function(req, res) {
       var host = req.protocol + '://' + req.get('Host');
       var url = host+"/render/pdf";
 
+      page.set('viewportSize', {width:800,height:600});
+
       page.post(url, data, function(err, status) {
       // page.open("http://localhost:3000/", function(status) {
         console.log("opened page? ", status, err, url);
