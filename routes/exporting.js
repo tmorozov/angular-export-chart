@@ -26,11 +26,11 @@ exports.exportPdf = function(req, res) {
 
     ph.createPage(function (error, page) {
       var data = "pass=my_pass";
-      var port = req.app.settings.port || cfg.port;
+      // var port = req.app.settings.port || cfg.port;
       // var host = req.protocol + '://' + req.host  + ( port == 80 || port == 443 ? '' : ':'+port );
 
       // no port for heroku deployment
-      var host = req.protocol + '://' + req.host;
+      var host = req.protocol + '://' + req.get('Host');
       var url = host+"/render/pdf";
 
       page.post(url, data, function(err, status) {
