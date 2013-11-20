@@ -20,7 +20,11 @@ exports.exportPdf = function(req, res) {
   phantom.create(function (error, ph) {
     ph.createPage(function (error, page) {
       var data = "pass=my_pass";
-      page.post("http://localhost:3000/render/pdf", data, function(err, status) {
+      var port = req.app.settings.port || cfg.port;
+      var host = req.protocol + '://' + req.host  + ( port == 80 || port == 443 ? '' : ':'+port );
+      var url = host+"/render/pdf";
+
+      page.post(url, data, function(err, status) {
       // page.open("http://localhost:3000/", function(status) {
         console.log("opened page? ", status);
           page.render('page.pdf', function (error) {
