@@ -2,7 +2,7 @@ extends layout
 
 block content
   div(ng-controller="ChartExportCtrl")
-    div(style="height: 300px; width: 400px;")
+    div(style="height: 300px; width: 600px;")
       linechart(data="chart.data", options="chart.options")
   script.
     var chart = !{chart};
