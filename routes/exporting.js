@@ -23,8 +23,9 @@ exports.exportPdf = function(req, res) {
     }
 
     ph.createPage(function (error, page) {
-
-      page.setViewport({width: 640, height: 480}, function(err) {
+      // page.setViewport({width: 640, height: 480}, function(err) {
+      page.setPaperSize({ width: '800px', height: '600px', border: '0px' },
+        function(err) {
 
         page.post(url, data, function(err, status) {
           console.log("opened page? ", status, err, url);
