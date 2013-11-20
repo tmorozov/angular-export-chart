@@ -8,6 +8,6 @@
   "dependencies": {
     "express": "3.2.6",
     "jade": "*",
-    "node-phantom": "git://github.com/RaphaelRheault/node-phantom.git"
+    "node-phantom": "git://github.com/tmorozov/node-phantom.git"
   }
 }
