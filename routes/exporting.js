@@ -32,7 +32,7 @@ exports.exportPdf = function(req, res) {
 
       page.post(url, data, function(err, status) {
       // page.open("http://localhost:3000/", function(status) {
-        console.log("opened page? ", status);
+        console.log("opened page? ", status, err, url);
           page.render('page.pdf', function (error) {
             if (error) {
               console.log('Error rendering PDF: %s', error);
