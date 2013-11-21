@@ -2,7 +2,12 @@ extends layout
 
 block content
   div(ng-controller="ChartExportCtrl")
-    div(style="height: 300px; width: 600px; background-color: cyan;")
+    h1 Chart header
+    img(src="/images/trane_logo.gif", style="position:absolute; top:15px; right: 50px;")
+    hr
+    div(style="height: 300px; width: 600px; background-color: {{chart.bgColor}};")
       linechart(data="chart.data", options="chart.options")
+    hr
+    div Footter information...
   script.
     var chart = !{chart};

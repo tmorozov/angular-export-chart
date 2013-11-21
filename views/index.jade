@@ -5,15 +5,23 @@ block content
   div(ng-controller="ChartCtrl")
     div(style="height: 300px; width: 600px;")
       linechart(data="chart.data", options="chart.options")
+    hr
+    label Select background color for exporting:
+    select(ng-model="chart.bgColor", ng-init="chart.bgColor = 'cyan'",
+        ng-options="color for color in ['red', 'green', 'cyan', 'blue', 'white']")
+
     form(action="/export/pdf", method="POST")
       input(type="hidden", name="chart", value="{{chart}}")
       button(type="submit") Export PDF
     form(action="/export/png", method="POST")
       input(type="hidden", name="chart", value="{{chart}}")
       button(type="submit") Export PNG
+    hr
     form(action="/export/xls", method="POST")
       input(type="hidden", name="chart", value="{{chart}}")
       button(type="submit") Export XLS
     form(action="/export/csv", method="POST")
       input(type="hidden", name="chart", value="{{chart}}")
       button(type="submit") Export CSV
+    hr
+
