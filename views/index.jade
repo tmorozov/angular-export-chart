@@ -6,9 +6,14 @@ block content
     div(style="height: 300px; width: 600px;")
       linechart(data="chart.data", options="chart.options")
     hr
-    label Select background color for exporting:
-    select(ng-model="chart.bgColor", ng-init="chart.bgColor = 'cyan'",
-        ng-options="color for color in ['red', 'green', 'cyan', 'blue', 'white']")
+    div
+      label Select background color for Chart:
+      select(ng-model="chart.bgColor", ng-init="chart.bgColor = 'cyan'",
+          ng-options="color for color in ['transparent', 'red', 'green', 'cyan', 'blue', 'white']")
+    div
+      label Select background color for Body:
+      select(ng-model="chart.bodyColor", ng-init="chart.bodyColor = 'cyan'",
+          ng-options="color for color in ['transparent', 'red', 'green', 'cyan', 'blue', 'white']")
 
     form(action="/export/pdf", method="POST")
       input(type="hidden", name="chart", value="{{chart}}")

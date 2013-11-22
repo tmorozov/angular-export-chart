@@ -62,6 +62,7 @@ app.controller('ChartCtrl', function ($scope, $http, ChartExampleData) {
   };
 });
 
-app.controller('ChartExportCtrl', function ($scope) {
+app.controller('ChartExportCtrl', function ($scope, $document) {
   $scope.chart = chart;
+  $document[0].body.style.backgroundColor = chart.bodyColor;
 });
